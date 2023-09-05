@@ -1,0 +1,17 @@
+@import "./../base/variables";
+
+.header {
+    padding: 10px 0;
+    background-color: $color-bg;
+  nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    a {
+        img {
+          width: 140px;
+        }
+      }
+  }
+  
+}

@@ -1,0 +1,48 @@
+@import "./../base/variables";
+
+.measurements {
+  .measurements__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 30px;
+    overflow: scroll;
+    h1 {
+      text-align: center;
+    }
+    .create {
+      align-self: flex-end;
+    }
+    .table {
+      border-radius: 10px 10px 0 0;
+      overflow: hidden;
+      overflow-x: scroll;
+      
+      thead {
+        background-color: $color-bg;
+        border-radius: 10px 10px 0 0;
+        
+        tr{
+            th{
+                padding: 10px 20px;
+            }
+        }
+      }
+      tbody {
+        tr{
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            td{
+                padding: 10px 20px;
+                vertical-align: middle;
+                
+            }
+            &:hover{
+                background-color: $color-bg;
+            }
+        }
+      }
+    }
+  }
+}

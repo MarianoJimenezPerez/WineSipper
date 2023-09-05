@@ -1,0 +1,112 @@
+@import "./variables";
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  font-family: $font-family;
+  background-color: $color-white;
+  color: $color-black;
+  line-height: 1.7;
+  background-size: 4px 4px;
+
+  ::selection {
+    background-color: $color-highlight;
+    color: $color-white;
+  }
+
+  .container {
+    width: $container-width-lg;
+    margin: 0 auto;
+    @media screen and (max-width: $medium-screen) {
+      width: $container-width-md;
+    }
+    @media screen and (max-width: $small-screen) {
+      width: $container-width-sm;
+    }
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: 500;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+  section {
+    margin-top: 4rem;
+    @media screen and (max-width: $medium-screen) {
+      margin-top: 3rem;
+    }
+    @media screen and (max-width: $small-screen) {
+      margin-bottom: 2rem;
+    }
+    h3,
+    h5 {
+      text-align: center;
+      color: $color-secondary;
+    }
+    h3 {
+      color: $color-primary;
+      margin-bottom: 3rem;
+      font-size: 2rem;
+    }
+  }
+
+  .text__secondary {
+    color: $color-secondary;
+  }
+
+  a {
+    color: $color-primary;
+    transition: $transition;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: $color-highlight;
+  }
+
+  .btn {
+    width: max-content;
+    display: inline-block;
+    color: $color-primary;
+    padding: 0.75rem 1.2rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    border: 1px solid $color-highlight;
+    transition: $transition;
+  }
+
+  .btn__primary {
+    background-color: $color-highlight;
+    color: $color-bg;
+    &:hover {
+      background-color: $color-white;
+      color: $color-highlight;
+      border-color: $color-highlight;
+    }
+  }
+
+  .btn__secondary {
+    background-color: $color-white;
+    color: $color-highlight;
+    &:hover {
+      background-color: $color-highlight;
+      color: $color-white;
+    }
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+  }
+}
