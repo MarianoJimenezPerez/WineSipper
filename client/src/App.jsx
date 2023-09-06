@@ -1,13 +1,26 @@
-import React from 'react';
-import "./styles/index.scss"
-import Home from './pages/Home';
-import Register from './pages/Register';
-import Measurements from './pages/Measurements';
+import React from "react";
+import "./styles/index.scss";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Measurements from "./pages/Measurements";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./ProtectedRoute";
 
 const App = () => {
   return (
-    <Measurements />
-  )
-}
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/measurements" element={<Measurements />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+};
 
-export default App
+export default App;

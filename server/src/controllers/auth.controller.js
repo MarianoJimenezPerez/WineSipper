@@ -1,6 +1,7 @@
 import { connectDB } from "../db.js";
 import { decryptPassword, hashPassword } from "../libs/hashPassword.js";
 import { createAccessToken } from "../libs/jwt.js";
+import jwt from "jsonwebtoken";
 
 export const registry = async (req, res) => {
   const { username, email, password } = req.body;
@@ -9,8 +10,8 @@ export const registry = async (req, res) => {
     const connection = await connectDB();
 
     const checkUserQuery =
-      "SELECT COUNT(*) AS count FROM users WHERE username = ?";
-    const [rows] = await connection.execute(checkUserQuery, [username]);
+      "SELECT COUNT(*) AS count FROM users WHERE email = ?";
+    const [rows] = await connection.execute(checkUserQuery, [email]);
 
     if (rows[0].count > 0) {
       connection.end();
@@ -92,6 +93,34 @@ export const logout = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error al cerrar sesión" });
+  }
+};
+
+export const verifyToken = async (req, res) => {
+  const { authToken } = req.cookies;
+  if (!authToken) return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+    const connection = await connectDB();
+    jwt.verify(authToken, process.env.TOKEN_SECRET, async (err, user) => {
+      if (err) return res.status(401).json({ message: "Unauthorized" });
+
+      const searchQuery = "SELECT * FROM users WHERE id = ?";
+      const [rows] = await connection.execute(searchQuery, [user.id]);
+
+      connection.end();
+
+      if (rows.length === 0) res.status(401).json({ message: "Unauthorized" });
+
+      return res.json({
+        id: rows[0].id,
+        username: rows[0].username,
+        email: rows[0].email,
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error al verificar token" });
   }
 };
 
