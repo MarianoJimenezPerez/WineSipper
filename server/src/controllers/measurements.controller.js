@@ -27,22 +27,41 @@ export const createMeasurement = async (req, res) => {
     userId,
   } = req.body;
 
+  if (
+    !year ||
+    !variety ||
+    !type ||
+    !color ||
+    !temperature ||
+    !graduation ||
+    !ph ||
+    !userId
+  ) {
+    return res.status(400).json({ error: "Todos los campos son obligatorios" });
+  }
+
   try {
     const connection = await connectDB();
 
     const insertMeasurementQuery =
       "INSERT INTO measurements (year, variety, type, color, temperature, graduation, ph, observation, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    const [result] = await connection.execute(insertMeasurementQuery, [
-      year,
-      variety,
-      type,
-      color,
-      temperature,
-      graduation,
-      ph,
-      observation,
-      userId,
-    ]);
+
+    const parameters = [
+      year || null,
+      variety || null,
+      type || null,
+      color || null,
+      temperature || null,
+      graduation || null,
+      ph || null,
+      observation || null,
+      userId || null,
+    ];
+
+    const [result] = await connection.execute(
+      insertMeasurementQuery,
+      parameters
+    );
 
     connection.end();
 
@@ -51,7 +70,7 @@ export const createMeasurement = async (req, res) => {
       measurement: { result },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error); // Usar console.error para errores
     res.status(500).json({ error: "Error al registrar la measurement" });
   }
 };

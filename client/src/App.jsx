@@ -6,19 +6,22 @@ import Measurements from "./pages/Measurements";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./ProtectedRoute";
+import { MeasurementProvider } from "./context/MeasurementsContext";
 
 const App = () => {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/measurements" element={<Measurements />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <MeasurementProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/measurements" element={<Measurements />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </MeasurementProvider>
     </AuthProvider>
   );
 };
